@@ -12,8 +12,8 @@ $$ y(n) = 3 \cdot x(n) $$
 
 These equations are useful for seeing the relationship between input and output, but they don't always reveal much about the characteristics of the resultant sound. Instead, we can rearrange the equation to find the _impulse response_, typically depicted as $h(n)$.
 
-$$ h(n) = {y(n) \over x(n)} $$
-$$ h(n) = {{3 \cdot x(n)} \over x(n)} $$
+$$ h(n) = \frac{y(n)}{x(n)} $$
+$$ h(n) = \frac {3 \cdot x(n)}{x(n)} $$
 $$ h(n) = 3 $$
 
 As the name suggests, the impulse response tells us how a system will respond to an impulse (e.g. a single sample of $1.0$). Since our impulse response in this case is a constant, we can deduce that this is a gain effect. This was probably apparent from the difference equation alone, but now we have a fancy equation to prove it.
@@ -24,8 +24,8 @@ $$ y(n) = b_0 \cdot x(n) + b_1 \cdot x(n-1) $$
 
 Here we have two constants, $b_0$ and $b_1$, our input signal, $x(n)$, and a representation of our input signal delayed by a single sample, $x(n-1)$. Let's rearrange this to find the system's impulse response:
 
-$$ h(n) = {{b_0 \cdot x(n) + b_1 \cdot x(n-1)} \over x(n)} $$
-$$ h(n) = b_0 + {b_1 \cdot x(n-1) \over x(n)} $$
+$$ h(n) = \frac {b_0 \cdot x(n) + b_1 \cdot x(n-1)}{x(n)} $$
+$$ h(n) = b_0 + \frac{b_1 \cdot x(n-1)}{x(n)} $$
 
 This time there's not much we can derive from this equation. To get some more information about this particular system, we'll need to use a different approach.
 
@@ -36,7 +36,7 @@ An impulse response only tells us about the characteristics of the system's _amp
 For this particular system, the transfer function is:
 
 $$ y(n) = b_0 \cdot x(n) + b_1 \cdot x(n-1) $$
-$$ h(n) = b_0 + {b_1 \cdot x(n-1) \over x(n)} $$
+$$ h(n) = b_0 + \frac{b_1 \cdot x(n-1)}{x(n)} $$
 $$ H(z) = b_0 + b_1 \cdot z^{-1} $$
 
 I'll explain exactly how this is derived a little later, but for now I want to highlight the similarities between $H(z)$ and $y(n)$. Note how we've effectively replaced the $x$ terms with $z$ (the first $x(n)$ term seems to have completely disappeared, but that's because there's a hidden $z^0$ term (i.e. $1.0$) being multiplied with $b_0$).
@@ -51,7 +51,7 @@ In a very similar way, $z$ relates to _frequency_ but is not a _measurement_ of 
 
 We can calculate $z$ like so:
 
-$$ z = e^{j \cdot 2 \pi \cdot {f \over f_s}} $$
+$$ z = e^{j \cdot 2 \pi \cdot \frac{f}{f_s}} $$
 
 Where $j$ is the imaginary unit equal to $\sqrt {-1}$, $f_s$ is the system's sampling rate, and $f$ is the frequency for which we're calculating $z$.
 
@@ -61,7 +61,7 @@ $$ e^{j \cdot \omega} = cos(\omega) + j \cdot sin(\omega) $$
 
 So, for $z$ we can determine that:
 
-$$ \omega = 2 \pi \cdot {f \over f_s} $$
+$$ \omega = 2 \pi \cdot \frac{f}{f_s} $$
 
 Since $\omega$ is representing an angle, and its value is determined by a scaling of $2 \pi$, we can see how increasing values of $f$ up to the sample rate will rotate the angle through a full $360^\circ$. Therefore, when dealing with the $z$-domain, it can be useful to think of $z$ as a frequency value that's been "wrapped" around a circle, rather than plotted on a horizontal axis.
 
@@ -96,7 +96,6 @@ $$ H(z) = \frac{Y(z)}{X(z)} $$
 Therefore, we can now use the $z$-Transform to calculate the transfer function of our impulse response. First, we'll define the transfer function of our output:
 
 $$ y(n) = b_0 \cdot x(n) + b_1 \cdot x(n-1) $$
-<!-- Apply Z-Transform -->
 $$ Y(z) = \sum_{n=0}^{N} (b_0 \cdot x(n) + b_1 \cdot x(n-1)) \cdot z^{-n} $$
 
 Next, we can expand the series and pull out common factors. In this case we can find a common factor of $b_0+b_1 \cdot z^{-1}$:
@@ -271,8 +270,8 @@ Trending towards $∞$ is very dangerous - especially in an audio context since 
 
 When I introduced the $z$-Transform, I specified the range of $n$ values as $0 \le n \le N$ since in the real world we only ever deal with finite series. However, strictly speaking the $z$-Transform should be defined as so:
 
-$$ X(z) = \sum_{n=-∞}^{∞} x[n] \cdot z^{-1} $$
+$$ X(z) = \sum_{n=-∞}^{∞} x(n) \cdot z^{-1} $$
 
 Here the range of $n$ is limitless. Therefore, the ROC for a given input, $x[n]$ can be defined as:
 
-$$ ROC = \sum_{n=-∞}^{∞} |x[n] \cdot z^{-1}| < ∞ $$
+$$ ROC = \sum_{n=-∞}^{∞} |x(n) \cdot z^{-1}| < ∞ $$
