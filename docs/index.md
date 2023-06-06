@@ -65,8 +65,9 @@ $$ \omega = 2 \pi \cdot \frac{f}{f_s} $$
 
 Since $\omega$ is representing an angle, and its value is determined by a scaling of $2 \pi$, we can see how increasing values of $f$ up to the sample rate will rotate the angle through a full $360^\circ$. Therefore, when dealing with the $z$-domain, it can be useful to think of $z$ as a frequency value that's been "wrapped" around a circle, rather than plotted on a horizontal axis.
 
-**_TODO: Add some step-by-step diagrams to show frequency mapped to $z$ at different values._**
-<img src=".png"/>
+<div align="center">
+    <img src="/filter-math/assets/diagrams/z-plane-mapping.jpg" width="1314">
+</div>
 
 ### The $z$-transform
 
